@@ -1,8 +1,6 @@
 package guru.springframework.spring5webapp.domain;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Set;
 
 public class Book {
@@ -12,6 +10,9 @@ public class Book {
     private Long id;
     private String title;
     private String isbn;
+    @ManyToMany
+    @JoinTable(name= "author_book", joinColumns = @JoinColumn(name= "book_id"),
+            inverseJoinColumns = @JoinColumn(name="author_id"))
     private Set<Author> authors;
 
     public Book(String title, String isbn, Set<Author> authors) {
@@ -21,6 +22,14 @@ public class Book {
     }
 
     public Book() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
